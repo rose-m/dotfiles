@@ -2,3 +2,7 @@
 
 cp ./.vimrc ~/
 cp ./.zshrc ~/
+
+cp ./.gitconfig ~/
+
+cp ./.ideavimrc ~/
