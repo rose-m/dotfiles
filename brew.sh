@@ -3,7 +3,7 @@
 # Run "doctor"
 brew doctor
 
-brew install vim --with-override-system-vi
+brew install vim
 brew install tmux
 brew install reattach-to-user-namespace
 
