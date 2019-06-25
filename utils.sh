@@ -1,12 +1,10 @@
 #!/bin/bash
 
 # Install oh-my-zsh
-if [ -n "$(which zsh)" ]; then
-    echo "-> ZSH is already installed"
-else
-    echo "-> Installing ZSH..."
-    sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-fi
+echo "-> Installing ZSH..."
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+cp ./dracula.zsh-theme ~/.oh-my-zsh/themes/
 
 # Install homebrew
 if [ -n "$(which brew)" ]; then
