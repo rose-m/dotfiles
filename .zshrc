@@ -101,6 +101,7 @@ alias gcpb='git rev-parse --abbrev-ref HEAD | pbcopy'
 
 # custom aliases
 alias tunnel-vnc-pi='echo "Tunneling VNC for raspberrypi";ssh pi@raspberrypi -L 50000:localhost:5900 -N';
+alias serve='python ~/.cr-scripts/serve.py "$@"';
 
 # collaboration Factory aliases
 export CFUSER="mrose"

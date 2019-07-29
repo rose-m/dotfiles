@@ -7,6 +7,7 @@ Installing all the dotfiles and tools:
 3. `sh cp-dotfiles.sh`
 4. `sh brew.sh`
 5. `sh vundle.sh`
+6. `sh scripts.sh`
 
 Manual steps:
 * Install the `IR_Black.terminal` profile
