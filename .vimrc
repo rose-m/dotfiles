@@ -6,12 +6,19 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+Plugin 'vim-airline/vim-airline'
+
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" Dracula Theme
+packadd! dracula_pro
+let g:dracula_colorterm = 0
+colorscheme dracula_pro
 
 """ General Behavior
 " Leave hidden buffers open
@@ -20,7 +27,7 @@ set hidden
 set history=100
 
 """ Finding Files
-" set path+=**
+set path+=**
 set wildmenu
 
 """ Editing
