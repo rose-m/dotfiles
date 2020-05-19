@@ -10,5 +10,5 @@ Installing all the dotfiles and tools:
 6. `sh scripts.sh`
 
 Manual steps:
-* Install the `IR_Black.terminal` profile
+* Install the Dracula Pro themes
 
