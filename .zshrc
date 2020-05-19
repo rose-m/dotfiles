@@ -1,5 +1,7 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/sbin:/usr/local/bin:$PATH
+export PATH=$HOME/.jenv/bin:$HOME/bin:/usr/local/sbin:/usr/local/bin:$PATH
+eval "$(jenv init -)"
+export JAVA_HOME="$(dirname $(dirname $(jenv which java)))"
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/rosem/.oh-my-zsh
@@ -10,7 +12,7 @@ export ZSH=/Users/rosem/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="dracula"
+ZSH_THEME="custom-dracula"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -54,7 +56,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git osx vi-mode)
+plugins=(git osx vi-mode docker gradle)
  
 source $ZSH/oh-my-zsh.sh
 
@@ -90,14 +92,18 @@ export LC_CTYPE=de_DE.UTF-8
 
 zstyle ':completion:*' special-dirs true
 
-# Command Helpers
-alias npm-exec='PATH=$(npm bin):$PATH'
-
 # Git Aliases
 alias greset='git reset HEAD --hard'
 alias gff='git pull --ff-only'
 alias gpu='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 alias gcpb='git rev-parse --abbrev-ref HEAD | pbcopy'
+
+function gitrmc() {
+    BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    COMMIT=$(git rev-parse HEAD)
+    git checkout -
+    git branch -D "$BRANCH"
+}
 
 # custom aliases
 alias tunnel-vnc-pi='echo "Tunneling VNC for raspberrypi";ssh pi@raspberrypi -L 50000:localhost:5900 -N';
@@ -114,6 +120,25 @@ function sshc() {
 	echo "Connecting to $server..."
 	ssh -o SendEnv=CFUSER root@$server
 }
+
+function mkpatch() {
+    folder=$1
+    file=$2
+    if [ ! -d "$folder" ]; then
+        echo "Usage: mkpatch <directory> [patchfile]"
+        return 1
+    fi
+    if [ -z "$file" ]; then
+        file="patch.zip"
+    fi
+    echo -n "... removing .DS_Store files"
+    find "$folder" -name ".DS_Store" -exec rm {} \;
+    echo " done."
+    zip -r "$file" "$folder"
+    echo "Patch written to: $file"
+}
+
+alias cdocs='docker run --rm -it -v "`pwd`":/src/content/testing-repo -p 1313:1313 -u hugo docs:latest server --environment devtesting -w --bind=0.0.0.0'
 
 unalias gm
 
