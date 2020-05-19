@@ -8,7 +8,6 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'maxbrunsfeld/vim-yankstack'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
