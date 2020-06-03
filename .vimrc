@@ -44,6 +44,8 @@ set visualbell
 set laststatus=2
 " set cursorline
 " set clipboard+=unnamed
+set foldmethod=syntax
+set nofoldenable
 
 set ts=4
 set sw=4
