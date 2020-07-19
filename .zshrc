@@ -91,6 +91,7 @@ function gitrmc() {
 # custom aliases
 alias tunnel-vnc-pi='echo "Tunneling VNC for raspberrypi";ssh pi@raspberrypi -L 50000:localhost:5900 -N';
 alias serve='python ~/.cr-scripts/serve.py "$@"';
+alias video2gif='~/.cr-scripts/video2gif.sh "$@"';
 
 # collaboration Factory aliases
 export CFUSER="mrose"
