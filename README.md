@@ -12,4 +12,5 @@ Installing all the dotfiles and tools:
 
 Manual steps:
 * Install the Dracula Pro themes
+* Ensure to install all additional Homebrew packages from `~/.homebrew_list`
 
