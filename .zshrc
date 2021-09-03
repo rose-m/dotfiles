@@ -1,10 +1,19 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.jenv/bin:$HOME/bin:/usr/local/sbin:/usr/local/bin:$PATH
-eval "$(jenv init -)"
-export JAVA_HOME="$(dirname $(dirname $(jenv which java)))"
+export PATH=~/.mongodb/versions/mongodb-current/bin:$PATH
+
+#eval "$(jenv init -)"
+#export JAVA_HOME="$(dirname $(dirname $(jenv which java)))"
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/rosem/.oh-my-zsh
+export ZSH=/Users/michael.rose/.oh-my-zsh
 
 # Java Path
 # export JAVA_HOME=`/usr/libexec/java_home`
@@ -12,7 +21,8 @@ export ZSH=/Users/rosem/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="custom-dracula"
+#ZSH_THEME="custom-dracula"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -56,7 +66,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git osx vi-mode docker gradle)
+plugins=(git osx vi-mode docker)
  
 source $ZSH/oh-my-zsh.sh
 
@@ -68,10 +78,13 @@ source $ZSH/oh-my-zsh.sh
 export LANG=de_DE.UTF-8
 export LC_CTYPE=de_DE.UTF-8
 
+ulimit -n 64000
+
 export EDITOR=vim
 export VISUAL=vim
 alias vimrc="vim ~/.vimrc"
 alias zshconfig="vim ~/.zshrc"
+alias python3="python3.9"
 
 zstyle ':completion:*' special-dirs true
 
@@ -80,6 +93,7 @@ alias greset='git reset HEAD --hard'
 alias gff='git pull --ff-only'
 alias gpu='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 alias gcpb='git rev-parse --abbrev-ref HEAD | pbcopy'
+alias gs='git status'
 
 function gitrmc() {
     BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -89,46 +103,34 @@ function gitrmc() {
 }
 
 # custom aliases
-alias tunnel-vnc-pi='echo "Tunneling VNC for raspberrypi";ssh pi@raspberrypi -L 50000:localhost:5900 -N';
-alias serve='python ~/.cr-scripts/serve.py "$@"';
-alias video2gif='~/.cr-scripts/video2gif.sh "$@"';
-alias foam='$(cd ~/Software/private/foam-workspace; code .)';
-
-# collaboration Factory aliases
-export CFUSER="mrose"
-function sshc() {
-	cluster=$1
-	if [ -z $cluster ]; then
-		echo "Usage: sshc <cluster-number>"
-	fi
-	server="cplace-cluster$cluster.collaboration-factory.de"
-	echo "Connecting to $server..."
-	ssh -o SendEnv=CFUSER root@$server
-}
-
-function mkpatch() {
-    folder=$1
-    file=$2
-    if [ ! -d "$folder" ]; then
-        echo "Usage: mkpatch <directory> [patchfile]"
-        return 1
-    fi
-    if [ -z "$file" ]; then
-        file="patch.zip"
-    fi
-    echo -n "... removing .DS_Store files"
-    find "$folder" -name ".DS_Store" -exec rm {} \;
-    echo " done."
-    zip -r "$file" "$folder"
-    echo "Patch written to: $file"
-}
-
-alias cdocs='docker run --rm -it -v "`pwd`":/src/content/testing-repo -p 1313:1313 -u hugo docs:latest server --environment devtesting -w --bind=0.0.0.0'
+alias tunnel-vnc-pi='echo "Tunneling VNC for raspberrypi";ssh pi@raspberrypi -L 50000:localhost:5900 -N'
+alias video2gif='~/.cr-scripts/video2gif.sh "$@"'
+alias cp-compass-plugin='~/.cr-scripts/cp-compass-plugin.py'
+alias npr='npm run'
+alias mongosh-latest='~/Software/mongodb/mongosh/packages/cli-repl/bin/mongosh.js'
 
 unalias gm
 
+listening() {
+    if [ $# -eq 0 ]; then
+        sudo lsof -iTCP -sTCP:LISTEN -n -P
+    elif [ $# -eq 1 ]; then
+        sudo lsof -iTCP -sTCP:LISTEN -n -P | grep -i --color $1
+    else
+        echo "Usage: listening [pattern]"
+    fi
+}
+
 # Include all "tool" aliases
-if [ -f "~/Software/tools/aliases.sh" ]; then
+if [[ -f ~/Software/tools/aliases.sh ]]; then
     source ~/Software/tools/aliases.sh
 fi
 
+# NVM Stuff
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
