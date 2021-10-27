@@ -94,6 +94,7 @@ alias gff='git pull --ff-only'
 alias gpu='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 alias gcpb='git rev-parse --abbrev-ref HEAD | pbcopy'
 alias gs='git status'
+alias phypercon='export PATH="/Users/michael.rose/Software/squ/hypercon-platform/node_modules/.bin:$PATH" && nvm use 14'
 
 function gitrmc() {
     BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -108,6 +109,14 @@ alias video2gif='~/.cr-scripts/video2gif.sh "$@"'
 alias cp-compass-plugin='~/.cr-scripts/cp-compass-plugin.py'
 alias npr='npm run'
 alias mongosh-latest='~/Software/mongodb/mongosh/packages/cli-repl/bin/mongosh.js'
+
+function set-aws-env() {
+    eval $(aws-export-credentials --profile $1 --env-export)
+}
+
+function fixssh() {
+    eval $(tmux show-env -s |grep '^SSH_')
+}
 
 unalias gm
 
@@ -132,5 +141,14 @@ export NVM_DIR="$HOME/.nvm"
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Python Stuff
+eval "$(pyenv init -)"
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Created by `pipx` on 2021-10-04 14:46:16
+export PATH="$PATH:/Users/michael.rose/.local/bin"

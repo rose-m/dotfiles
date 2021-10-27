@@ -36,7 +36,7 @@ set wildmenu
 """ Editing
 " Enable syntax highlighting
 syntax enable
-set number relativenumber
+set number
 set numberwidth=3
 set textwidth=0
 set showcmd
