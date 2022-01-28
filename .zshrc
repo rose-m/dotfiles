@@ -66,7 +66,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git osx vi-mode docker)
+plugins=(git macos vi-mode docker aws kubectl zsh-syntax-highlighting zsh-autosuggestions)
  
 source $ZSH/oh-my-zsh.sh
 
@@ -110,9 +110,8 @@ alias cp-compass-plugin='~/.cr-scripts/cp-compass-plugin.py'
 alias npr='npm run'
 alias mongosh-latest='~/Software/mongodb/mongosh/packages/cli-repl/bin/mongosh.js'
 
-function set-aws-env() {
-    eval $(aws-export-credentials --profile $1 --env-export)
-}
+# Bazel aliases
+alias bzlg='bazel run //:gazelle'
 
 function fixssh() {
     eval $(tmux show-env -s |grep '^SSH_')
@@ -144,6 +143,9 @@ export NVM_DIR="$HOME/.nvm"
 # Python Stuff
 eval "$(pyenv init -)"
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# GO Stuff
+export GOPRIVATE="github.com/cresta/*"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
