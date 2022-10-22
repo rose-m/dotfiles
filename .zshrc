@@ -106,9 +106,7 @@ function gitrmc() {
 # custom aliases
 alias tunnel-vnc-pi='echo "Tunneling VNC for raspberrypi";ssh pi@raspberrypi -L 50000:localhost:5900 -N'
 alias video2gif='~/.cr-scripts/video2gif.sh "$@"'
-alias cp-compass-plugin='~/.cr-scripts/cp-compass-plugin.py'
 alias npr='npm run'
-alias mongosh-latest='~/Software/mongodb/mongosh/packages/cli-repl/bin/mongosh.js'
 
 # Bazel aliases
 alias bzlg='bazel run //:gazelle'
