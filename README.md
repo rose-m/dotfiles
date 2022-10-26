@@ -9,6 +9,7 @@ Installing all the dotfiles and tools:
 5. `sh vundle.sh` (optional)
 6. `git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`
 7. `sh scripts.sh`
+8. `sh git.sh`
 
 Manual steps:
 * Install the Dracula Pro themes
