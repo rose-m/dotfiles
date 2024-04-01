@@ -10,8 +10,10 @@ blur=true
 history=25000
 
 [font]
-normal.family="MonaspiceNe NF"
-offset.y=8
+normal.family="JetBrainsMono Nerd Font"
+size=11
+#normal.family="MonaspiceNe NFM"
+#offset.y=8
 
 # Colors (Gruvbox dark)
 
