@@ -21,7 +21,6 @@ export ZSH=/Users/michael.rose/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="custom-dracula"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -66,8 +65,8 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git macos vi-mode docker aws kubectl zsh-syntax-highlighting zsh-autosuggestions)
- 
+plugins=(git macos vi-mode docker aws kubectl nvm zsh-syntax-highlighting zsh-autosuggestions ruby poetry poetry-env)
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -94,7 +93,7 @@ alias gff='git pull --ff-only'
 alias gpu='git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)'
 alias gcpb='git rev-parse --abbrev-ref HEAD | pbcopy'
 alias gs='git status'
-alias phypercon='export PATH="/Users/michael.rose/Software/squ/hypercon-platform/node_modules/.bin:$PATH" && nvm use 14'
+alias phypercon='export PATH="/Users/michael.rose/Software/square0/hypercon-platform/node_modules/.bin:$PATH" && nvm use 14'
 
 function gitrmc() {
     BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -106,7 +105,9 @@ function gitrmc() {
 # custom aliases
 alias tunnel-vnc-pi='echo "Tunneling VNC for raspberrypi";ssh pi@raspberrypi -L 50000:localhost:5900 -N'
 alias video2gif='~/.cr-scripts/video2gif.sh "$@"'
+alias cp-compass-plugin='~/.cr-scripts/cp-compass-plugin.py'
 alias npr='npm run'
+alias mongosh-latest='~/Software/mongodb/mongosh/packages/cli-repl/bin/mongosh.js'
 
 # Bazel aliases
 alias bzlg='bazel run //:gazelle'
@@ -115,7 +116,6 @@ function fixssh() {
     eval $(tmux show-env -s |grep '^SSH_')
 }
 
-unalias gm
 
 listening() {
     if [ $# -eq 0 ]; then
@@ -134,16 +134,19 @@ fi
 
 # NVM Stuff
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+NVM_HOMEBREW=$(brew --prefix nvm)
 
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+zstyle ':omz:plugins:nvm' silent-autoload yes
 
 # Python Stuff
 eval "$(pyenv init -)"
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 # GO Stuff
-export GOPRIVATE="github.com/cresta/*"
+export PATH="$HOME/go/bin:$PATH"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -152,3 +155,11 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # Created by `pipx` on 2021-10-04 14:46:16
 export PATH="$PATH:/Users/michael.rose/.local/bin"
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+unalias gm
+
+# Init rbenv
+eval "$(rbenv init - help)"
+
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
