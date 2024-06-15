@@ -16,4 +16,5 @@ cp "$SOURCE_DIR/.gitconfig" $TARGET_DIR
 cp "$SOURCE_DIR/.ideavimrc" $TARGET_DIR
 cp "$SOURCE_DIR/.tmux.conf" $TARGET_DIR
 cp "$SOURCE_DIR/.vimrc" $TARGET_DIR
+cp "$SOURCE_DIR/.zshomp.toml" $TARGET_DIR
 cp "$SOURCE_DIR/.zshrc" $TARGET_DIR
