@@ -1,5 +1,5 @@
 [user]
-	name = rosem
+	name = Michael Rose
 	email = michael_rose@gmx.de
 	signingkey = A48F2F26FBD0CC5BEB9E2C3A29C8ADA24CA6D472
 [core]
@@ -11,6 +11,7 @@
 	ui = auto
 [push]
 	default = simple
+	followTags = true
 [merge]
 	ff = true
 [alias]
@@ -23,3 +24,9 @@
 	gpgsign = true
 [gpg]
 	program = gpg
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[url "ssh://git@ssh.github.com:443/"]
+	insteadOf = git@github.com:
+[pull]
+	rebase = true

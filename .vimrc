@@ -18,11 +18,6 @@ Plugin 'tpope/vim-surround'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" Dracula Theme
-packadd! dracula_pro
-let g:dracula_colorterm = 0
-colorscheme dracula_pro
-
 """ General Behavior
 " Leave hidden buffers open
 set hidden
