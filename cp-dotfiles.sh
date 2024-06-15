@@ -5,7 +5,7 @@ TARGET_DIR="./"
 
 if [[ "$1" == "install" ]]; then
 	echo "Installing dotfiles..."
-	TARGET_DIR="~"
+	TARGET_DIR="$(cd ~ && pwd)"
 	SOURCE_DIR="."
 else
 	echo "Copying dotfiles..."
