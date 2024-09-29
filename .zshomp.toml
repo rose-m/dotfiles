@@ -40,7 +40,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     style = 'plain'
     foreground = 'yellow'
     background = 'transparent'
-    template = '{{ .FormattedMs }}'
+    template = '{{ .FormattedMs }} '
 
     [blocks.segments.properties]
       threshold = 1000

@@ -11,6 +11,11 @@ ulimit -n 64000
 export EDITOR=nvim
 export VISUAL=nvim
 
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=10000
+setopt INC_APPEND_HISTORY_TIME
+
 #
 # === Setup ZINIT ===
 #
@@ -27,17 +32,16 @@ fi
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
+bindkey -v
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+
+# Load fzf widgets and bindings (like CTRL-R, CTRL-T, CTRL-I)
+source <(fzf --zsh)
+
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
-
-# Configure vi-mode
-zvm_config() {
-  ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
-  ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLOCK
-}
-zinit ice depth=1
-zinit light jeffreytse/zsh-vi-mode
 
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
@@ -46,14 +50,16 @@ zinit snippet OMZP::poetry-env
 zinit snippet OMZP::terraform
 zinit snippet OMZP::command-not-found
 
-autoload -Uz +X compinit && compinit
-
-zinit cdreplay -q
-
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
+setopt no_auto_remove_slash
+setopt auto_cd
+
+autoload -Uz compinit && compinit
+
+zinit cdreplay -q
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 #
@@ -61,6 +67,7 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 #
 export PATH=$(go env GOPATH)/bin:$PATH
 export PATH=$PATH:/Users/michael.rose/.local/bin # Pipx
+export PATH=$PATH:/usr/local/share/dotnet # dotnet
 
 #
 # === Configure oh-my-posh ===
@@ -96,6 +103,7 @@ function gitrmc() {
 alias tunnel-vnc-pi='echo "Tunneling VNC for raspberrypi";ssh pi@raspberrypi -L 50000:localhost:5900 -N'
 alias video2gif='~/.cr-scripts/video2gif.sh "$@"'
 alias npr='npm run'
+alias lg='lazygit'
 
 function fixssh() {
     eval $(tmux show-env -s |grep '^SSH_')
@@ -126,8 +134,6 @@ aasp ()
   eval "$(aws configure export-credentials --profile $profile --format env)"
 }
 
-
-
 #
 # === NVM Stuff ===
 #
@@ -140,3 +146,10 @@ export NVM_DIR="$HOME/.nvm"
 # 
 eval "$(pyenv init -)"
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+#
+# === Load local settings ===
+#
+if [ -f "$HOME/.zsh_local" ]; then
+  source "$HOME/.zsh_local"
+fi
